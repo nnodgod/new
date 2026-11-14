@@ -1,5 +1,5 @@
 yaml
-name: Build VowelSynth
+name: Build VowelSynth-project
 
 on:
   push:
@@ -26,11 +26,11 @@ jobs:
       - name: Upload installer
         uses: actions/upload-artifact@v4
         with:
-          name: VowelSynth-Setup
-          path: dist/VowelSynth-Setup.exe
+          name: VowelSynth-project-Setup
+          path: dist/VowelSynth-project-Setup.exe
 
       - name: Upload raw VST3 (no installer)
         uses: actions/upload-artifact@v4
         with:
-          name: VowelSynth-vst3
-          path: build/VowelSynth_artefacts/Release/VST3/VowelSynth.vst3
+          name: VowelSynth-project-vst3
+          path: build/VowelSynth-project_artefacts/Release/VST3/VowelSynth-project.vst3
