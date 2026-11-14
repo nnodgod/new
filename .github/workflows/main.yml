@@ -1,0 +1,36 @@
+yaml
+name: Build VowelSynth
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Configure
+        run: cmake -B build -DCMAKE_BUILD_TYPE=Release -DVM_COPY=OFF
+
+      - name: Build
+        run: cmake --build build --config Release --parallel
+
+      - name: Install Inno Setup
+        run: choco install innosetup -y --no-progress
+
+      - name: Build installer
+        run: '& "C:\Program Files (x86)\Inno Setup 6\ISCC.exe" installer.iss'
+
+      - name: Upload installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: VowelSynth-Setup
+          path: dist/VowelSynth-Setup.exe
+
+      - name: Upload raw VST3 (no installer)
+        uses: actions/upload-artifact@v4
+        with:
+          name: VowelSynth-vst3
+          path: build/VowelSynth_artefacts/Release/VST3/VowelSynth.vst3
